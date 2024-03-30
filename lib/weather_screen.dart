@@ -1,11 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:weather_application/main_card.dart';
 
 class WeatherScreen extends StatelessWidget {
   // void Function()? onPressed;
-  WeatherScreen({
+  const WeatherScreen({
     super.key,
     // required this.onPressed,
   });
@@ -28,11 +27,24 @@ class WeatherScreen extends StatelessWidget {
                 icon: const Icon(Icons.refresh))
           ],
         ),
-        body:const Padding(
+        body:const  Padding(
           padding:  EdgeInsets.all(16.0),
           child:  Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              //Main Card
                 MainCard(),
+            SizedBox(height: 17,),
+               //Weather forecast
+               
+                Text("Weather Forecast",style: TextStyle(
+                  fontSize: 23,
+                  fontWeight: FontWeight.bold,
+                ),
+                ),
+                SizedBox(height: 17,),
+                //Scrollable Weather forecast
+                
             ]
            
           ),
