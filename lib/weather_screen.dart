@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:weather_application/main_card.dart';
+import 'package:weather_application/scrollable_weather_forecast.dart';
 
 class WeatherScreen extends StatelessWidget {
   // void Function()? onPressed;
@@ -42,9 +43,24 @@ class WeatherScreen extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
                 ),
-                SizedBox(height: 17,),
+                SizedBox(height: 13,),
                 //Scrollable Weather forecast
-                
+             SizedBox(
+          
+               child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                 child: Row(
+                  children: [  
+                    WeatherForecast(),
+                    WeatherForecast(),
+                   WeatherForecast(),
+                   WeatherForecast(),
+                   WeatherForecast(),
+                   ],
+                 ),
+               ),
+             )
+
             ]
            
           ),
