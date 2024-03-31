@@ -1,30 +1,40 @@
 import 'package:flutter/material.dart';
 
 class MyAdditionalInformation extends StatelessWidget {
-  const MyAdditionalInformation({super.key});
+  final IconData icon;
+  final String condition;
+  final String value;
+  const MyAdditionalInformation({super.key, 
+  required this.icon,
+   required this.condition,
+    required this.value});
 
   @override
   Widget build(BuildContext context) {
-    return const Card(
+    return  Card(
       elevation: 0,
       child: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding:const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Icon(Icons.water_drop,size: 32,),
-            SizedBox(height: 13,),
-            Text("Humidity",style:
-            TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.normal),
-        
+            Icon(
+             icon,
+              size: 32,
             ),
-            SizedBox(height: 9,),
-             Text("94",style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold
-                ),
-                ),
+           const SizedBox(
+              height: 13,
+            ),
+            Text(
+              condition,
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
+            ),
+           const SizedBox(
+              height: 9,
+            ),
+            Text(
+             value,
+              style:const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
           ],
         ),
       ),

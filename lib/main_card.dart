@@ -24,7 +24,7 @@ class MainCard extends StatelessWidget {
             child: const Column(
               children: [
                   SizedBox(height: 10,),
-                Text("230.7",
+                Text("230.7K",
                 style: TextStyle(fontSize: 32,
                 fontWeight: FontWeight.bold),
                 ),

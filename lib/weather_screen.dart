@@ -52,11 +52,31 @@ class WeatherScreen extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                  child: Row(
                   children: [  
-                    WeatherForecast(),
-                    WeatherForecast(),
-                   WeatherForecast(),
-                   WeatherForecast(),
-                   WeatherForecast(),
+                    WeatherForecast(
+                      time: "9:00",
+                      icon: Icons.cloud,
+                      temperature: "301.17",    
+                     ),
+                    WeatherForecast(
+                      time: "10:00",
+                      icon: Icons.sunny,
+                      temperature: "315.19",
+                    ),
+                   WeatherForecast(
+                    time: "11:00",
+                    icon: Icons.sunny,
+                   temperature: "300.98",
+                   ),
+                   WeatherForecast(
+                    time: "12:00",
+                    icon: Icons.sunny_snowing,
+                   temperature: "320.98",
+                   ),
+                   WeatherForecast(
+                    time: "1:00",
+                    icon: Icons.cloud,
+                    temperature: "330.1",
+                   ),
                    ],
                  ),
                ),
@@ -71,9 +91,21 @@ class WeatherScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                     MyAdditionalInformation(),
-                      MyAdditionalInformation(),
-                       MyAdditionalInformation(),
+                     MyAdditionalInformation(
+                      icon: Icons.water_drop,
+                      condition: "Humidity",
+                      value: "94",
+                     ),
+                      MyAdditionalInformation(
+                        icon: Icons.wind_power,
+                        condition: "wind Speed",
+                        value: "7.67",
+                      ),
+                       MyAdditionalInformation(
+                        icon: Icons.umbrella_outlined,
+                        condition: "Pressure",
+                        value: "1006",
+                       ),
                        
                   ],
                 )
