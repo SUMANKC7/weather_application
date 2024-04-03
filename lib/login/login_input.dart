@@ -21,6 +21,7 @@ class LoginInput extends StatelessWidget {
           hintStyle: const TextStyle(fontSize: 20),
           border: const OutlineInputBorder(
               borderSide: BorderSide(color: Colors.white))),
+              
     );
   }
 }

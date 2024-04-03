@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:weather_application/login/button_login.dart';
 import 'package:weather_application/login/login_input.dart';
+import 'package:weather_application/utils/routes.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -21,12 +22,13 @@ class LoginPage extends StatelessWidget {
                     color: Colors.white,
                     child: const Text(
                       "Welcome !",
-                      style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                     )),
                 const SizedBox(
                   height: 12,
                 ),
-          
+
                 //Icon
                 const Center(
                   child: Icon(
@@ -40,25 +42,25 @@ class LoginPage extends StatelessWidget {
                   "Email",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-          
+
                 //Email box
                 const SizedBox(
                   height: 10,
                 ),
                 const LoginInput(
                   hintText: "Enter Username",
-                  obsecureText: false,
+                  obsecureText: false, 
                 ),
                 const SizedBox(
                   height: 15,
                 ),
-          
+
                 //Password text
                 const Text(
                   "Password",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-          
+
                 //Password box
                 const SizedBox(
                   height: 10,
@@ -70,29 +72,50 @@ class LoginPage extends StatelessWidget {
                 const SizedBox(
                   height: 15,
                 ),
-          
-                 //Forget Password
-                 const Text("Forget Password ?",style: TextStyle(
-                  color: Colors.blue,
-                  fontSize: 15,
-                  ),),
-                 const SizedBox(
+
+                //Forget Password
+                const Text(
+                  "Forget Password ?",
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontSize: 15,
+                  ),
+                ),
+                const SizedBox(
                   height: 20,
                 ),
-          
+
                 //Login Button
-                const LoginButton(login: "Login",),
-          
+                const LoginButton(
+                  login: "Login",
+                ),
+
                 //Register
-                SizedBox(height: 20,),
-                
+                SizedBox(
+                  height: 20,
+                ),
+
                 Center(
-                  child: Row(children: [
-                    const Text("Don't have account ?",style: TextStyle(fontSize: 15),),
-                    GestureDetector(
-                      onTap: (){},
-                      child:const Text(" Register",style: TextStyle(fontSize: 18,color: const Color.fromARGB(255, 120, 188, 244)),))
-                  ],),
+                  child: Row(
+                    children: [
+                      const Text(
+                        "Don't have account ?",
+                        style: TextStyle(fontSize: 15),
+                      ),
+                      GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, MyRoutes.registerRoute);
+                          },
+                          child: const Text(
+                            " Register",
+                            style: TextStyle(
+                                fontSize: 18,
+                                color:
+                                    const Color.fromARGB(255, 120, 188, 244)),
+                          ))
+                    ],
+                  ),
                 )
               ],
             ),
@@ -102,4 +125,3 @@ class LoginPage extends StatelessWidget {
     );
   }
 }
-
