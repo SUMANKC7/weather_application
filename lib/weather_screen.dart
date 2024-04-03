@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:weather_application/additional_information.dart';
 import 'package:weather_application/main_card.dart';
 import 'package:weather_application/scrollable_weather_forecast.dart';
@@ -18,6 +19,7 @@ class WeatherScreen extends StatefulWidget {
 }
 
 class _WeatherScreenState extends State<WeatherScreen> {
+  late Future<Map<String, dynamic>> weather;
   Future<Map<String, dynamic>> getCurrentWeather() async {
     try {
       final res = await http.get(
@@ -38,6 +40,12 @@ class _WeatherScreenState extends State<WeatherScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    weather = getCurrentWeather();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
@@ -48,11 +56,17 @@ class _WeatherScreenState extends State<WeatherScreen> {
           ),
           centerTitle: true,
           actions: [
-            IconButton(onPressed: () {}, icon: const Icon(Icons.refresh))
+            IconButton(
+                onPressed: () {
+                  setState(() {
+                    weather = getCurrentWeather();
+                  });
+                },
+                icon: const Icon(Icons.refresh))
           ],
         ),
         body: FutureBuilder(
-          future: getCurrentWeather(),
+          future: weather,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
@@ -66,10 +80,6 @@ class _WeatherScreenState extends State<WeatherScreen> {
             final currentPressure = data["list"][0]["main"]["pressure"];
             final currentWindSpeed = data["list"][0]["wind"]["speed"];
             final currentHumidity = data["list"][0]["main"]["humidity"];
-
-           
-            
-           
 
             return Padding(
               padding: const EdgeInsets.all(16.0),
@@ -99,21 +109,25 @@ class _WeatherScreenState extends State<WeatherScreen> {
                     //Scrollable Weather forecast
 
                     SizedBox(
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            for (int i = 0; i < 5;i++)
-                                WeatherForecast(
-                                  time:data["list"][i]["dt_txt"],
-                                  icon:  data["list"][i]["weather"][0]["main"]=="clouds" ||
-                                  data["list"][i]["weather"][0]["main"]=="rain"?Icons.cloud:Icons.sunny,
-                                  temperature: "${data["list"][i]["main"]["temp"]}",
-                                ),
-                              
-                          ],
-                        ),
-                      ),
+                      height: 120,
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: 5,
+                          itemBuilder: ((context, index) {
+                            final weatherForecast = data["list"][index + 1];
+                            final hourlySky =
+                                weatherForecast["weather"][0]["main"];
+                            final time =
+                                DateTime.parse(weatherForecast["dt_txt"]);
+                            return WeatherForecast(
+                                time: DateFormat.j().format(time),
+                                icon:
+                                    hourlySky == "clouds" || hourlySky == "Rain"
+                                        ? Icons.cloud
+                                        : Icons.sunny,
+                                temperature:
+                                    weatherForecast["main"]["temp"].toString());
+                          })),
                     ),
                     SizedBox(
                       height: 17,
