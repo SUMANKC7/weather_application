@@ -18,7 +18,7 @@ class WeatherScreen extends StatefulWidget {
 }
 
 class _WeatherScreenState extends State<WeatherScreen> {
-  Future getCurrentWeather() async {
+  Future<Map<String, dynamic>> getCurrentWeather() async {
     try {
       final res = await http.get(
         Uri.parse(
@@ -55,66 +55,62 @@ class _WeatherScreenState extends State<WeatherScreen> {
           future: getCurrentWeather(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child:  CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }
             if (snapshot.hasError) {
               return Text(snapshot.error.toString());
             }
-            return const Padding(
-              padding: EdgeInsets.all(16.0),
+            final data = snapshot.data!;
+            final currentTemp = data["list"][0]["main"]["temp"];
+            final currentSky = data["list"][0]["weather"][0]["main"];
+            final currentPressure = data["list"][0]["main"]["pressure"];
+            final currentWindSpeed = data["list"][0]["wind"]["speed"];
+            final currentHumidity = data["list"][0]["main"]["humidity"];
+
+           
+            
+           
+
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     //Main Card
                     MainCard(
-                      temperature: "200K",
+                      temperature: "$currentTemp",
+                      weather: currentSky,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 17,
                     ),
                     //Weather forecast
 
-                    Text(
+                    const Text(
                       "Weather Forecast",
                       style: TextStyle(
                         fontSize: 23,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 17,
                     ),
                     //Scrollable Weather forecast
+
                     SizedBox(
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(
                           children: [
-                            WeatherForecast(
-                              time: "9:00",
-                              icon: Icons.cloud,
-                              temperature: "301.17",
-                            ),
-                            WeatherForecast(
-                              time: "10:00",
-                              icon: Icons.sunny,
-                              temperature: "315.19",
-                            ),
-                            WeatherForecast(
-                              time: "11:00",
-                              icon: Icons.sunny,
-                              temperature: "300.98",
-                            ),
-                            WeatherForecast(
-                              time: "12:00",
-                              icon: Icons.sunny_snowing,
-                              temperature: "320.98",
-                            ),
-                            WeatherForecast(
-                              time: "1:00",
-                              icon: Icons.cloud,
-                              temperature: "330.1",
-                            ),
+                            for (int i = 0; i < 5;i++)
+                                WeatherForecast(
+                                  time:data["list"][i]["dt_txt"],
+                                  icon:  data["list"][i]["weather"][0]["main"]=="clouds" ||
+                                  data["list"][i]["weather"][0]["main"]=="rain"?Icons.cloud:Icons.sunny,
+                                  temperature: "${data["list"][i]["main"]["temp"]}",
+                                ),
+                              
                           ],
                         ),
                       ),
@@ -138,17 +134,17 @@ class _WeatherScreenState extends State<WeatherScreen> {
                         MyAdditionalInformation(
                           icon: Icons.water_drop,
                           condition: "Humidity",
-                          value: "94",
+                          value: "$currentHumidity",
                         ),
                         MyAdditionalInformation(
                           icon: Icons.wind_power,
                           condition: "wind Speed",
-                          value: "7.67",
+                          value: currentWindSpeed.toString(),
                         ),
                         MyAdditionalInformation(
                           icon: Icons.umbrella_outlined,
                           condition: "Pressure",
-                          value: "1006",
+                          value: "$currentPressure",
                         ),
                       ],
                     )

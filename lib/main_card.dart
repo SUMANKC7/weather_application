@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 
 class MainCard extends StatelessWidget {
   final String temperature;
-  const MainCard({super.key, required this.temperature});
+  final String weather;
+  const MainCard({super.key, required this.temperature, required this.weather});
 
   @override
   Widget build(BuildContext context) {
@@ -19,27 +20,29 @@ class MainCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-            child:  Column(
+            child: Column(
               children: [
-               const SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Text(
-                  temperature,
+                  "$temperature K",
                   style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
                   height: 10,
                 ),
                 Icon(
-                  Icons.cloud,
+                  weather=="Rain" || weather=="Cloud"? 
+                  Icons.cloud:Icons.sunny,
+                
                   size: 50,
                 ),
                 SizedBox(
                   height: 10,
                 ),
                 Text(
-                  "Rain",
+                  weather,
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.w500,
